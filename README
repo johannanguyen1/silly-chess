@@ -1,0 +1,47 @@
+Indy README
+
+OVERVIEW:
+There are two modes of my Chess: basic and silly. Basic chess follows traditional chess rules,
+with en passant, castling, check, and checkmate functions.
+Silly chess is something much weirder:
+- Every time a non-pawn piece is captured, all pieces of the board are shifted in a random direction by one row/column.
+- The pieces on the edge of the board (which would have been shifted off the board) will wrap to the opposite side of the board.
+- One of the pieces of the wrapped row/column (besides the king) will switch colors and to a lower valued piece (example: if original piece was a white rook, it would become a black bishop, knight, or pawn).
+- Hierarchy: queen, rook, bishop, knight, pawn.
+- Switched piece can now be used by the side of the color it switched to.
+
+My Chess contains 13 classes: App, Bishop, Board, Constants, Game, King, Knight, MySquare, PaneOrganizer,
+Pawn, Piece, Queen, and Rook.
+    - App contains an instance of PaneOrganizer, which is used to create the scene and stage
+    for the Game.
+    - PaneOrganizer contains the root of the scene, which is a BorderPane containing an HBox, a
+    VBox, and the game Pane (the center) nodes. These structures are the higher level nodes, and
+    within the gamePane are components like squares (MySquares made of Rectangles) and Pieces.
+    This class also instantiates the Game instance and passes it the HBox, VBox, and gamePane.
+    - PaneOrganizer is the highest level graphic class, and Game is the highest level logic
+    and minor graphics class.
+    - Game contains the Board and instances of lower hierarchy pieces. It is responsible for
+    updating game state and player turns. It contains ActionEvent, GameOver, sillyShift, and
+    other special case move functions.
+    - Board contains multiple instances of MySquare and all the subclasses of Piece.
+    - Bishop, King, Knight, Pawn, Queen, and Rook extend the abstract class Piece.
+    - MySquare contains Rectangle from JavaFX.
+    - Constants includes values used in all the prior classes mentioned.
+
+DESIGN CHOICES:
+ - The Board 2D array is set up in column row major (think of it more like X, Y).
+ - Using a LinkedList to store my white pieces and black pieces ease traversing since an array would
+ require traversing 32 elements rather than a few in the late endgame when more pieces get captured.
+ - I decided to make Piece abstract so that methods written in the abstract class Piece will
+  work with any type of piece that extends from it. Methods can also be easily overridden.
+ - My checkmate logic considers situations of double check and single check instead of
+ creating a copy of the board and making and undoing moves to reduce errors.
+
+KNOWN BUGS:
+- When in check, occasionally, pieces are unable to move to protect their king.
+
+EXTRA CREDIT: None.
+
+DEBUGGING COLLABORATORS: None.
+
+HOURS SPENT: About 100 hours.
